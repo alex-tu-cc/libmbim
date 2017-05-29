@@ -1,0 +1,53 @@
+Description: Increase the retry interval to 5 seconds.
+ Sierra Mobile Broadband EM7455 won't work while the retry interval is
+ only one second.
+Author: Shih-Yuan Lee (FourDollars) <sylee@canonical.com>
+Bug: https://bugs.freedesktop.org/show_bug.cgi?id=91189
+Bug-Ubuntu: https://bugs.launchpad.net/bugs/1441095
+Forwarded: https://bugs.freedesktop.org/show_bug.cgi?id=91189#c11
+Applied-Upstream: 1.12.4, http://cgit.freedesktop.org/libmbim/libmbim/commit/?h=mbim-1-12&id=b3ea7215cca8c2bfc6707178f28642b698013af4
+Reviewed-by: Aleksander Morgado <aleksander@aleksander.es>
+Last-Update: 2015-09-25
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+Index: libmbim-1.12.2/src/libmbim-glib/mbim-device.c
+===================================================================
+--- libmbim-1.12.2.orig/src/libmbim-glib/mbim-device.c
++++ libmbim-1.12.2/src/libmbim-glib/mbim-device.c
+@@ -33,6 +33,7 @@
+ #include <gudev/gudev.h>
+ #include <sys/ioctl.h>
+ #define IOCTL_WDM_MAX_COMMAND _IOR('H', 0xA0, guint16)
++#define RETRY_TIMEOUT_SECS 5
+ 
+ #include "mbim-utils.h"
+ #include "mbim-device.h"
+@@ -1090,7 +1091,7 @@ typedef struct {
+     GCancellable *cancellable;
+     DeviceOpenContextStep step;
+     MbimDeviceOpenFlags flags;
+-    guint timeout;
++    gint timeout;
+ } DeviceOpenContext;
+ 
+ static void
+@@ -1163,8 +1164,8 @@ open_message_ready (MbimDevice        *s
+         /* Check if we should be retrying */
+         if (g_error_matches (error, MBIM_CORE_ERROR, MBIM_CORE_ERROR_TIMEOUT)) {
+             /* The timeout will tell us how many retries we should do */
+-            ctx->timeout--;
+-            if (ctx->timeout) {
++            ctx->timeout -= RETRY_TIMEOUT_SECS;
++            if (ctx->timeout >= 0) {
+                 g_error_free (error);
+                 open_message (ctx);
+                 return;
+@@ -1204,7 +1205,7 @@ open_message (DeviceOpenContext *ctx)
+                                      ctx->self->priv->max_control_transfer);
+     mbim_device_command (ctx->self,
+                          request,
+-                         1, /* 1s per retry */
++                         RETRY_TIMEOUT_SECS,
+                          ctx->cancellable,
+                          (GAsyncReadyCallback)open_message_ready,
+                          ctx);

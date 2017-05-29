@@ -1,0 +1,99 @@
+libmbim (1.12.2-2ubuntu1) wily; urgency=medium
+
+  * libmbim-glib: Increase the retry interval to 5 seconds. (LP: #1441095)
+
+ -- Shih-Yuan Lee (FourDollars) <sylee@canonical.com>  Fri, 25 Sep 2015 15:59:59 +0800
+
+libmbim (1.12.2-2) unstable; urgency=medium
+
+  * Upload to unstable.
+  * Add myself to Uploaders.
+
+ -- Michael Biebl <biebl@debian.org>  Thu, 07 May 2015 01:18:23 +0200
+
+libmbim (1.12.2-1) experimental; urgency=medium
+
+  * Team upload.
+
+  [ Marius B. Kotsbak ]
+  * Imported Upstream version 1.12.2
+  * Update debian/libmbim-glib4.symbols for new upstream release.
+  * Update Debian standards version to the latest.
+  * Add experimental branch config in gbp.conf.
+
+  [ Michael Biebl ]
+  * Update Vcs-* to use canonical URLs, use cgit and https for Vcs-Browser.
+
+ -- Michael Biebl <biebl@debian.org>  Sun, 08 Feb 2015 23:53:38 +0100
+
+libmbim (1.10.0-2.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Apply patch from Boris Egorov to fix bashisms (Closes: #772325)
+
+ -- Jonathan Wiltshire <jmw@debian.org>  Fri, 19 Dec 2014 20:25:16 +0000
+
+libmbim (1.10.0-2) unstable; urgency=medium
+
+  * Team upload.
+  * Use a strictly versioned dependency between libmbim-proxy and
+    libmbim-glib4, so the two packages don't get out of sync.
+  * Make any package linking against libmbim-glib4 get an explicit dependency
+    on libmbim-proxy. The mbim-proxy binary is used internally by
+    libmbim-glib4 and the package split is an implementation detail to
+    properly support multi-arch. Convince lintian that this is intentional.
+
+ -- Michael Biebl <biebl@debian.org>  Tue, 16 Sep 2014 23:03:20 +0200
+
+libmbim (1.10.0-1) unstable; urgency=low
+
+  * Team upload.
+
+  [ Marius B. Kotsbak ]
+  * New upstream release.
+  * Rename libmbim-glib0 → libmbim-glib4 for the soname bump.
+  * Add new package libmbim-proxy holding mbim-proxy binary.
+  * Add debug info package libmbim-glib4-dbg.
+
+  [ Michael Biebl ]
+  * Use dh_install --list-missing to show uninstalled files.
+  * Install man pages via dh_install.
+  * Drop obsolete --with-tests configure option.
+
+ -- Michael Biebl <biebl@debian.org>  Sun, 14 Sep 2014 03:13:18 +0200
+
+libmbim (1.8.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update debian/libmbim-glib0.symbols.
+
+ -- Thomas Bechtold <toabctl@debian.org>  Tue, 25 Mar 2014 07:51:28 +0100
+
+libmbim (1.6.0-2) unstable; urgency=medium
+
+  * debian/copyright: Mention GFDL-1.3+ license which is used for
+    documentation (Closes: #732527).
+  * debian/control: Bump Standards-Version to 3.9.5. No further changes
+    needed.
+
+ -- Thomas Bechtold <toabctl@debian.org>  Sun, 22 Dec 2013 13:21:38 +0100
+
+libmbim (1.6.0-1) unstable; urgency=low
+
+  * New upstream release (Closes: #731908)
+  * Fix Multi-Arch: same problem with separated doc package (Closes: #728195)
+  * debian/patches/0001-build-filter-out-non-public-symbols.patch: Dropped,
+    applied upstream.
+  * debian/libmbim-utils.install: Provide mbim-network binary.
+  * debian/libmbim-utils.manpages: Install manpages provided by upstream.
+  * debian/rules: manpage creation no longer needed. manpages are provided by
+    upstream.
+  * debian/control: Use Debian email address in maintainer field.
+
+ -- Thomas Bechtold <toabctl@debian.org>  Mon, 16 Dec 2013 19:03:17 +0100
+
+libmbim (1.4.0-1) unstable; urgency=low
+
+  * Initial release. (Closes: #716765)
+
+ -- Thomas Bechtold <thomasbechtold@jpberlin.de>  Wed, 17 Jul 2013 11:36:33 +0200

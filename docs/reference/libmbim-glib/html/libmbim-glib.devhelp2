@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE book PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "">
+<book xmlns="http://www.devhelp.net/book" title="libmbim-glib Reference Manual" link="index.html" author="" name="libmbim-glib" version="2" language="c">
+  <chapters>
+    <sub name="Core" link="ch01.html">
+      <sub name="Version checks" link="libmbim-glib-Version-checks.html"/>
+      <sub name="UUIDs" link="libmbim-glib-UUIDs.html"/>
+      <sub name="Command IDs" link="libmbim-glib-Command-IDs.html"/>
+      <sub name="MbimMessage" link="MbimMessage.html"/>
+      <sub name="MbimDevice" link="MbimDevice.html"/>
+      <sub name="MbimProxy" link="MbimProxy.html"/>
+      <sub name="Enumerations and Flags" link="libmbim-glib-Enumerations-and-Flags.html"/>
+      <sub name="Errors" link="libmbim-glib-Errors.html"/>
+      <sub name="Common utilities" link="libmbim-glib-Common-utilities.html"/>
+    </sub>
+    <sub name="Generic Services" link="ch02.html">
+      <sub name="Basic Connect" link="libmbim-glib-Basic-Connect.html"/>
+      <sub name="SMS" link="libmbim-glib-SMS.html"/>
+      <sub name="USSD" link="libmbim-glib-USSD.html"/>
+      <sub name="Auth" link="libmbim-glib-Auth.html"/>
+      <sub name="Phonebook" link="libmbim-glib-Phonebook.html"/>
+      <sub name="STK" link="libmbim-glib-STK.html"/>
+      <sub name="DSS" link="libmbim-glib-DSS.html"/>
+    </sub>
+    <sub name="Other Services" link="ch03.html">
+      <sub name="MS Firmware ID" link="libmbim-glib-MS-Firmware-ID.html"/>
+      <sub name="MS Host Shutdown" link="libmbim-glib-MS-Host-Shutdown.html"/>
+    </sub>
+    <sub name="Compatibility" link="ch04.html">
+      <sub name="Deprecated API" link="libmbim-glib-Deprecated-API.html"/>
+    </sub>
+    <sub name="Object Hierarchy" link="object-tree.html"/>
+    <sub name="API Index" link="api-index-full.html"/>
+    <sub name="Annotation Glossary" link="annotation-glossary.html"/>
+  </chapters>
+  <functions>
+    <keyword type="macro" name="MBIM_MAJOR_VERSION" link="libmbim-glib-Version-checks.html#MBIM-MAJOR-VERSION:CAPS"/>
+    <keyword type="macro" name="MBIM_MINOR_VERSION" link="libmbim-glib-Version-checks.html#MBIM-MINOR-VERSION:CAPS"/>
+    <keyword type="macro" name="MBIM_MICRO_VERSION" link="libmbim-glib-Version-checks.html#MBIM-MICRO-VERSION:CAPS"/>
+    <keyword type="macro" name="MBIM_CHECK_VERSION()" link="libmbim-glib-Version-checks.html#MBIM-CHECK-VERSION:CAPS"/>
+    <keyword type="function" name="mbim_service_get_string ()" link="libmbim-glib-UUIDs.html#mbim-service-get-string"/>
+    <keyword type="function" name="mbim_service_lookup_name ()" link="libmbim-glib-UUIDs.html#mbim-service-lookup-name"/>
+    <keyword type="function" name="mbim_register_custom_service ()" link="libmbim-glib-UUIDs.html#mbim-register-custom-service"/>
+    <keyword type="function" name="mbim_unregister_custom_service ()" link="libmbim-glib-UUIDs.html#mbim-unregister-custom-service"/>
+    <keyword type="function" name="mbim_service_id_is_custom ()" link="libmbim-glib-UUIDs.html#mbim-service-id-is-custom"/>
+    <keyword type="function" name="mbim_context_type_get_string ()" link="libmbim-glib-UUIDs.html#mbim-context-type-get-string"/>
+    <keyword type="function" name="mbim_uuid_cmp ()" link="libmbim-glib-UUIDs.html#mbim-uuid-cmp"/>
+    <keyword type="function" name="mbim_uuid_from_printable ()" link="libmbim-glib-UUIDs.html#mbim-uuid-from-printable"/>
+    <keyword type="function" name="mbim_uuid_get_printable ()" link="libmbim-glib-UUIDs.html#mbim-uuid-get-printable"/>
+    <keyword type="function" name="mbim_uuid_from_service ()" link="libmbim-glib-UUIDs.html#mbim-uuid-from-service"/>
+    <keyword type="function" name="mbim_uuid_to_service ()" link="libmbim-glib-UUIDs.html#mbim-uuid-to-service"/>
+    <keyword type="function" name="mbim_uuid_from_context_type ()" link="libmbim-glib-UUIDs.html#mbim-uuid-from-context-type"/>
+    <keyword type="function" name="mbim_uuid_to_context_type ()" link="libmbim-glib-UUIDs.html#mbim-uuid-to-context-type"/>
+    <keyword type="enum" name="enum MbimService" link="libmbim-glib-UUIDs.html#MbimService"/>
+    <keyword type="enum" name="enum MbimContextType" link="libmbim-glib-UUIDs.html#MbimContextType"/>
+    <keyword type="struct" name="MbimUuid" link="libmbim-glib-UUIDs.html#MbimUuid"/>
+    <keyword type="macro" name="MBIM_UUID_INVALID" link="libmbim-glib-UUIDs.html#MBIM-UUID-INVALID:CAPS"/>
+    <keyword type="macro" name="MBIM_UUID_BASIC_CONNECT" link="libmbim-glib-UUIDs.html#MBIM-UUID-BASIC-CONNECT:CAPS"/>
+    <keyword type="macro" name="MBIM_UUID_SMS" link="libmbim-glib-UUIDs.html#MBIM-UUID-SMS:CAPS"/>
+    <keyword type="macro" name="MBIM_UUID_USSD" link="libmbim-glib-UUIDs.html#MBIM-UUID-USSD:CAPS"/>
+    <keyword type="macro" name="MBIM_UUID_PHONEBOOK" link="libmbim-glib-UUIDs.html#MBIM-UUID-PHONEBOOK:CAPS"/>
+    <keyword type="macro" name="MBIM_UUID_STK" link="libmbim-glib-UUIDs.html#MBIM-UUID-STK:CAPS"/>
+    <keyword type="macro" name="MBIM_UUID_AUTH" link="libmbim-glib-UUIDs.html#MBIM-UUID-AUTH:CAPS"/>
+    <keyword type="macro" name="MBIM_UUID_DSS" link="libmbim-glib-UUIDs.html#MBIM-UUID-DSS:CAPS"/>
+    <keyword type="macro" name="MBIM_UUID_MS_FIRMWARE_ID" link="libmbim-glib-UUIDs.html#MBIM-UUID-MS-FIRMWARE-ID:CAPS"/>
+    <keyword type="macro" name="MBIM_UUID_MS_HOST_SHUTDOWN" link="libmbim-glib-UUIDs.html#MBIM-UUID-MS-HOST-SHUTDOWN:CAPS"/>
+    <keyword type="macro" name="MBIM_UUID_PROXY_CONTROL" link="libmbim-glib-UUIDs.html#MBIM-UUID-PROXY-CONTROL:CAPS"/>
+    <keyword type="function" name="mbim_cid_can_set ()" link="libmbim-glib-Command-IDs.html#mbim-cid-can-set"/>
+    <keyword type="function" name="mbim_cid_can_query ()" link="libmbim-glib-Command-IDs.html#mbim-cid-can-query"/>
+    <keyword type="function" name="mbim_cid_can_notify ()" link="libmbim-glib-Command-IDs.html#mbim-cid-can-notify"/>
+    <keyword type="function" name="mbim_cid_get_printable ()" link="libmbim-glib-Command-IDs.html#mbim-cid-get-printable"/>
+    <keyword type="function" name="mbim_cid_basic_connect_get_string ()" link="libmbim-glib-Command-IDs.html#mbim-cid-basic-connect-get-string"/>
+    <keyword type="function" name="mbim_cid_sms_get_string ()" link="libmbim-glib-Command-IDs.html#mbim-cid-sms-get-string"/>
+    <keyword type="function" name="mbim_cid_ussd_get_string ()" link="libmbim-glib-Command-IDs.html#mbim-cid-ussd-get-string"/>
+    <keyword type="function" name="mbim_cid_phonebook_get_string ()" link="libmbim-glib-Command-IDs.html#mbim-cid-phonebook-get-string"/>
+    <keyword type="function" name="mbim_cid_stk_get_string ()" link="libmbim-glib-Command-IDs.html#mbim-cid-stk-get-string"/>
+    <keyword type="function" name="mbim_cid_auth_get_string ()" link="libmbim-glib-Command-IDs.html#mbim-cid-auth-get-string"/>
+    <keyword type="function" name="mbim_cid_dss_get_string ()" link="libmbim-glib-Command-IDs.html#mbim-cid-dss-get-string"/>
+    <keyword type="function" name="mbim_cid_ms_firmware_id_get_string ()" link="libmbim-glib-Command-IDs.html#mbim-cid-ms-firmware-id-get-string"/>
+    <keyword type="function" name="mbim_cid_ms_host_shutdown_get_string ()" link="libmbim-glib-Command-IDs.html#mbim-cid-ms-host-shutdown-get-string"/>
+    <keyword type="function" name="mbim_cid_proxy_control_get_string ()" link="libmbim-glib-Command-IDs.html#mbim-cid-proxy-control-get-string"/>
+    <keyword type="enum" name="enum MbimCidBasicConnect" link="libmbim-glib-Command-IDs.html#MbimCidBasicConnect"/>
+    <keyword type="enum" name="enum MbimCidSms" link="libmbim-glib-Command-IDs.html#MbimCidSms"/>
+    <keyword type="enum" name="enum MbimCidUssd" link="libmbim-glib-Command-IDs.html#MbimCidUssd"/>
+    <keyword type="enum" name="enum MbimCidPhonebook" link="libmbim-glib-Command-IDs.html#MbimCidPhonebook"/>
+    <keyword type="enum" name="enum MbimCidStk" link="libmbim-glib-Command-IDs.html#MbimCidStk"/>
+    <keyword type="enum" name="enum MbimCidAuth" link="libmbim-glib-Command-IDs.html#MbimCidAuth"/>
+    <keyword type="enum" name="enum MbimCidDss" link="libmbim-glib-Command-IDs.html#MbimCidDss"/>
+    <keyword type="enum" name="enum MbimCidMsFirmwareId" link="libmbim-glib-Command-IDs.html#MbimCidMsFirmwareId"/>
+    <keyword type="enum" name="enum MbimCidMsHostShutdown" link="libmbim-glib-Command-IDs.html#MbimCidMsHostShutdown"/>
+    <keyword type="enum" name="enum MbimCidProxyControl" link="libmbim-glib-Command-IDs.html#MbimCidProxyControl"/>
+    <keyword type="function" name="mbim_message_new ()" link="MbimMessage.html#mbim-message-new"/>
+    <keyword type="function" name="mbim_message_dup ()" link="MbimMessage.html#mbim-message-dup"/>
+    <keyword type="function" name="mbim_message_ref ()" link="MbimMessage.html#mbim-message-ref"/>
+    <keyword type="function" name="mbim_message_unref ()" link="MbimMessage.html#mbim-message-unref"/>
+    <keyword type="function" name="mbim_message_get_printable ()" link="MbimMessage.html#mbim-message-get-printable"/>
+    <keyword type="function" name="mbim_message_get_raw ()" link="MbimMessage.html#mbim-message-get-raw"/>
+    <keyword type="function" name="mbim_message_get_message_type ()" link="MbimMessage.html#mbim-message-get-message-type"/>
+    <keyword type="function" name="mbim_message_get_message_length ()" link="MbimMessage.html#mbim-message-get-message-length"/>
+    <keyword type="function" name="mbim_message_get_transaction_id ()" link="MbimMessage.html#mbim-message-get-transaction-id"/>
+    <keyword type="function" name="mbim_message_set_transaction_id ()" link="MbimMessage.html#mbim-message-set-transaction-id"/>
+    <keyword type="function" name="mbim_message_type_get_string ()" link="MbimMessage.html#mbim-message-type-get-string"/>
+    <keyword type="function" name="mbim_message_open_new ()" link="MbimMessage.html#mbim-message-open-new"/>
+    <keyword type="function" name="mbim_message_open_get_max_control_transfer ()" link="MbimMessage.html#mbim-message-open-get-max-control-transfer"/>
+    <keyword type="function" name="mbim_message_open_done_get_status_code ()" link="MbimMessage.html#mbim-message-open-done-get-status-code"/>
+    <keyword type="function" name="mbim_message_open_done_get_result ()" link="MbimMessage.html#mbim-message-open-done-get-result"/>
+    <keyword type="function" name="mbim_message_close_new ()" link="MbimMessage.html#mbim-message-close-new"/>
+    <keyword type="function" name="mbim_message_close_done_get_status_code ()" link="MbimMessage.html#mbim-message-close-done-get-status-code"/>
+    <keyword type="function" name="mbim_message_close_done_get_result ()" link="MbimMessage.html#mbim-message-close-done-get-result"/>
+    <keyword type="function" name="mbim_message_error_new ()" link="MbimMessage.html#mbim-message-error-new"/>
+    <keyword type="function" name="mbim_message_function_error_new ()" link="MbimMessage.html#mbim-message-function-error-new"/>
+    <keyword type="function" name="mbim_message_error_get_error_status_code ()" link="MbimMessage.html#mbim-message-error-get-error-status-code"/>
+    <keyword type="function" name="mbim_message_error_get_error ()" link="MbimMessage.html#mbim-message-error-get-error"/>
+    <keyword type="function" name="mbim_message_command_new ()" link="MbimMessage.html#mbim-message-command-new"/>
+    <keyword type="function" name="mbim_message_command_append ()" link="MbimMessage.html#mbim-message-command-append"/>
+    <keyword type="function" name="mbim_message_command_get_service ()" link="MbimMessage.html#mbim-message-command-get-service"/>
+    <keyword type="function" name="mbim_message_command_get_service_id ()" link="MbimMessage.html#mbim-message-command-get-service-id"/>
+    <keyword type="function" name="mbim_message_command_get_cid ()" link="MbimMessage.html#mbim-message-command-get-cid"/>
+    <keyword type="function" name="mbim_message_command_get_command_type ()" link="MbimMessage.html#mbim-message-command-get-command-type"/>
+    <keyword type="function" name="mbim_message_command_get_raw_information_buffer ()" link="MbimMessage.html#mbim-message-command-get-raw-information-buffer"/>
+    <keyword type="function" name="mbim_message_command_type_get_string ()" link="MbimMessage.html#mbim-message-command-type-get-string"/>
+    <keyword type="function" name="mbim_message_command_done_get_service ()" link="MbimMessage.html#mbim-message-command-done-get-service"/>
+    <keyword type="function" name="mbim_message_command_done_get_service_id ()" link="MbimMessage.html#mbim-message-command-done-get-service-id"/>
+    <keyword type="function" name="mbim_message_command_done_get_cid ()" link="MbimMessage.html#mbim-message-command-done-get-cid"/>
+    <keyword type="function" name="mbim_message_command_done_get_status_code ()" link="MbimMessage.html#mbim-message-command-done-get-status-code"/>
+    <keyword type="function" name="mbim_message_command_done_get_result ()" link="MbimMessage.html#mbim-message-command-done-get-result"/>
+    <keyword type="function" name="mbim_message_command_done_get_raw_information_buffer ()" link="MbimMessage.html#mbim-message-command-done-get-raw-information-buffer"/>
+    <keyword type="function" name="mbim_message_indicate_status_get_service ()" link="MbimMessage.html#mbim-message-indicate-status-get-service"/>
+    <keyword type="function" name="mbim_message_indicate_status_get_service_id ()" link="MbimMessage.html#mbim-message-indicate-status-get-service-id"/>
+    <keyword type="function" name="mbim_message_indicate_status_get_cid ()" link="MbimMessage.html#mbim-message-indicate-status-get-cid"/>
+    <keyword type="function" name="mbim_message_indicate_status_get_raw_information_buffer ()" link="MbimMessage.html#mbim-message-indicate-status-get-raw-information-buffer"/>
+    <keyword type="function" name="mbim_message_response_get_result ()" link="MbimMessage.html#mbim-message-response-get-result"/>
+    <keyword type="struct" name="MbimMessage" link="MbimMessage.html#MbimMessage-struct"/>
+    <keyword type="enum" name="enum MbimMessageType" link="MbimMessage.html#MbimMessageType"/>
+    <keyword type="struct" name="struct MbimIPv4" link="MbimMessage.html#MbimIPv4"/>
+    <keyword type="struct" name="struct MbimIPv6" link="MbimMessage.html#MbimIPv6"/>
+    <keyword type="enum" name="enum MbimMessageCommandType" link="MbimMessage.html#MbimMessageCommandType"/>
+    <keyword type="function" name="mbim_device_new ()" link="MbimDevice.html#mbim-device-new"/>
+    <keyword type="function" name="mbim_device_new_finish ()" link="MbimDevice.html#mbim-device-new-finish"/>
+    <keyword type="function" name="mbim_device_get_file ()" link="MbimDevice.html#mbim-device-get-file"/>
+    <keyword type="function" name="mbim_device_peek_file ()" link="MbimDevice.html#mbim-device-peek-file"/>
+    <keyword type="function" name="mbim_device_get_path ()" link="MbimDevice.html#mbim-device-get-path"/>
+    <keyword type="function" name="mbim_device_get_path_display ()" link="MbimDevice.html#mbim-device-get-path-display"/>
+    <keyword type="function" name="mbim_device_is_open ()" link="MbimDevice.html#mbim-device-is-open"/>
+    <keyword type="function" name="mbim_device_open ()" link="MbimDevice.html#mbim-device-open"/>
+    <keyword type="function" name="mbim_device_open_finish ()" link="MbimDevice.html#mbim-device-open-finish"/>
+    <keyword type="function" name="mbim_device_open_full ()" link="MbimDevice.html#mbim-device-open-full"/>
+    <keyword type="function" name="mbim_device_open_full_finish ()" link="MbimDevice.html#mbim-device-open-full-finish"/>
+    <keyword type="function" name="mbim_device_close ()" link="MbimDevice.html#mbim-device-close"/>
+    <keyword type="function" name="mbim_device_close_finish ()" link="MbimDevice.html#mbim-device-close-finish"/>
+    <keyword type="function" name="mbim_device_close_force ()" link="MbimDevice.html#mbim-device-close-force"/>
+    <keyword type="function" name="mbim_device_get_next_transaction_id ()" link="MbimDevice.html#mbim-device-get-next-transaction-id"/>
+    <keyword type="function" name="mbim_device_command ()" link="MbimDevice.html#mbim-device-command"/>
+    <keyword type="function" name="mbim_device_command_finish ()" link="MbimDevice.html#mbim-device-command-finish"/>
+    <keyword type="macro" name="MBIM_DEVICE_FILE" link="MbimDevice.html#MBIM-DEVICE-FILE:CAPS"/>
+    <keyword type="macro" name="MBIM_DEVICE_IN_SESSION" link="MbimDevice.html#MBIM-DEVICE-IN-SESSION:CAPS"/>
+    <keyword type="macro" name="MBIM_DEVICE_TRANSACTION_ID" link="MbimDevice.html#MBIM-DEVICE-TRANSACTION-ID:CAPS"/>
+    <keyword type="macro" name="MBIM_DEVICE_SIGNAL_REMOVED" link="MbimDevice.html#MBIM-DEVICE-SIGNAL-REMOVED:CAPS"/>
+    <keyword type="macro" name="MBIM_DEVICE_SIGNAL_INDICATE_STATUS" link="MbimDevice.html#MBIM-DEVICE-SIGNAL-INDICATE-STATUS:CAPS"/>
+    <keyword type="macro" name="MBIM_DEVICE_SIGNAL_ERROR" link="MbimDevice.html#MBIM-DEVICE-SIGNAL-ERROR:CAPS"/>
+    <keyword type="struct" name="struct MbimDevice" link="MbimDevice.html#MbimDevice-struct"/>
+    <keyword type="enum" name="enum MbimDeviceOpenFlags" link="MbimDevice.html#MbimDeviceOpenFlags"/>
+    <keyword type="property" name="The “device-file” property" link="MbimDevice.html#MbimDevice--device-file"/>
+    <keyword type="property" name="The “device-in-session” property" link="MbimDevice.html#MbimDevice--device-in-session"/>
+    <keyword type="property" name="The “device-transaction-id” property" link="MbimDevice.html#MbimDevice--device-transaction-id"/>
+    <keyword type="signal" name="The “device-error” signal" link="MbimDevice.html#MbimDevice-device-error"/>
+    <keyword type="signal" name="The “device-indicate-status” signal" link="MbimDevice.html#MbimDevice-device-indicate-status"/>
+    <keyword type="signal" name="The “device-removed” signal" link="MbimDevice.html#MbimDevice-device-removed"/>
+    <keyword type="function" name="mbim_proxy_new ()" link="MbimProxy.html#mbim-proxy-new"/>
+    <keyword type="function" name="mbim_proxy_get_n_clients ()" link="MbimProxy.html#mbim-proxy-get-n-clients"/>
+    <keyword type="function" name="mbim_proxy_get_n_devices ()" link="MbimProxy.html#mbim-proxy-get-n-devices"/>
+    <keyword type="macro" name="MBIM_PROXY_SOCKET_PATH" link="MbimProxy.html#MBIM-PROXY-SOCKET-PATH:CAPS"/>
+    <keyword type="macro" name="MBIM_PROXY_N_CLIENTS" link="MbimProxy.html#MBIM-PROXY-N-CLIENTS:CAPS"/>
+    <keyword type="macro" name="MBIM_PROXY_N_DEVICES" link="MbimProxy.html#MBIM-PROXY-N-DEVICES:CAPS"/>
+    <keyword type="struct" name="struct MbimProxy" link="MbimProxy.html#MbimProxy-struct"/>
+    <keyword type="property" name="The “mbim-proxy-n-clients” property" link="MbimProxy.html#MbimProxy--mbim-proxy-n-clients"/>
+    <keyword type="property" name="The “mbim-proxy-n-devices” property" link="MbimProxy.html#MbimProxy--mbim-proxy-n-devices"/>
+    <keyword type="function" name="mbim_device_type_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-device-type-get-string"/>
+    <keyword type="function" name="mbim_cellular_class_build_string_from_mask ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-cellular-class-build-string-from-mask"/>
+    <keyword type="function" name="mbim_voice_class_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-voice-class-get-string"/>
+    <keyword type="function" name="mbim_sim_class_build_string_from_mask ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-sim-class-build-string-from-mask"/>
+    <keyword type="function" name="mbim_data_class_build_string_from_mask ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-data-class-build-string-from-mask"/>
+    <keyword type="function" name="mbim_sms_caps_build_string_from_mask ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-sms-caps-build-string-from-mask"/>
+    <keyword type="function" name="mbim_ctrl_caps_build_string_from_mask ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-ctrl-caps-build-string-from-mask"/>
+    <keyword type="function" name="mbim_subscriber_ready_state_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-subscriber-ready-state-get-string"/>
+    <keyword type="function" name="mbim_ready_info_flag_build_string_from_mask ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-ready-info-flag-build-string-from-mask"/>
+    <keyword type="function" name="mbim_radio_switch_state_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-radio-switch-state-get-string"/>
+    <keyword type="function" name="mbim_pin_type_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-pin-type-get-string"/>
+    <keyword type="function" name="mbim_pin_state_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-pin-state-get-string"/>
+    <keyword type="function" name="mbim_pin_operation_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-pin-operation-get-string"/>
+    <keyword type="function" name="mbim_pin_mode_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-pin-mode-get-string"/>
+    <keyword type="function" name="mbim_pin_format_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-pin-format-get-string"/>
+    <keyword type="function" name="mbim_provider_state_build_string_from_mask ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-provider-state-build-string-from-mask"/>
+    <keyword type="function" name="mbim_visible_providers_action_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-visible-providers-action-get-string"/>
+    <keyword type="function" name="mbim_nw_error_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-nw-error-get-string"/>
+    <keyword type="function" name="mbim_register_action_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-register-action-get-string"/>
+    <keyword type="function" name="mbim_register_state_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-register-state-get-string"/>
+    <keyword type="function" name="mbim_register_mode_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-register-mode-get-string"/>
+    <keyword type="function" name="mbim_packet_service_action_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-packet-service-action-get-string"/>
+    <keyword type="function" name="mbim_packet_service_state_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-packet-service-state-get-string"/>
+    <keyword type="function" name="mbim_activation_command_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-activation-command-get-string"/>
+    <keyword type="function" name="mbim_compression_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-compression-get-string"/>
+    <keyword type="function" name="mbim_auth_protocol_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-auth-protocol-get-string"/>
+    <keyword type="function" name="mbim_context_ip_type_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-context-ip-type-get-string"/>
+    <keyword type="function" name="mbim_activation_state_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-activation-state-get-string"/>
+    <keyword type="function" name="mbim_voice_call_state_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-voice-call-state-get-string"/>
+    <keyword type="function" name="mbim_ip_configuration_available_flag_build_string_from_mask ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-ip-configuration-available-flag-build-string-from-mask"/>
+    <keyword type="function" name="mbim_sms_storage_state_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-sms-storage-state-get-string"/>
+    <keyword type="function" name="mbim_sms_format_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-sms-format-get-string"/>
+    <keyword type="function" name="mbim_sms_flag_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-sms-flag-get-string"/>
+    <keyword type="function" name="mbim_sms_cdma_lang_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-sms-cdma-lang-get-string"/>
+    <keyword type="function" name="mbim_sms_cdma_encoding_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-sms-cdma-encoding-get-string"/>
+    <keyword type="function" name="mbim_sms_status_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-sms-status-get-string"/>
+    <keyword type="function" name="mbim_sms_status_flag_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-sms-status-flag-get-string"/>
+    <keyword type="function" name="mbim_ussd_action_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-ussd-action-get-string"/>
+    <keyword type="function" name="mbim_ussd_response_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-ussd-response-get-string"/>
+    <keyword type="function" name="mbim_ussd_session_state_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-ussd-session-state-get-string"/>
+    <keyword type="function" name="mbim_phonebook_flag_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-phonebook-flag-get-string"/>
+    <keyword type="function" name="mbim_phonebook_state_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-phonebook-state-get-string"/>
+    <keyword type="function" name="mbim_phonebook_write_flag_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-phonebook-write-flag-get-string"/>
+    <keyword type="function" name="mbim_stk_pac_profile_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-stk-pac-profile-get-string"/>
+    <keyword type="function" name="mbim_stk_pac_type_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-stk-pac-type-get-string"/>
+    <keyword type="function" name="mbim_network_idle_hint_state_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-network-idle-hint-state-get-string"/>
+    <keyword type="function" name="mbim_emergency_mode_state_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-emergency-mode-state-get-string"/>
+    <keyword type="function" name="mbim_dss_link_state_get_string ()" link="libmbim-glib-Enumerations-and-Flags.html#mbim-dss-link-state-get-string"/>
+    <keyword type="enum" name="enum MbimDeviceType" link="libmbim-glib-Enumerations-and-Flags.html#MbimDeviceType"/>
+    <keyword type="enum" name="enum MbimCellularClass" link="libmbim-glib-Enumerations-and-Flags.html#MbimCellularClass"/>
+    <keyword type="enum" name="enum MbimVoiceClass" link="libmbim-glib-Enumerations-and-Flags.html#MbimVoiceClass"/>
+    <keyword type="enum" name="enum MbimSimClass" link="libmbim-glib-Enumerations-and-Flags.html#MbimSimClass"/>
+    <keyword type="enum" name="enum MbimDataClass" link="libmbim-glib-Enumerations-and-Flags.html#MbimDataClass"/>
+    <keyword type="enum" name="enum MbimSmsCaps" link="libmbim-glib-Enumerations-and-Flags.html#MbimSmsCaps"/>
+    <keyword type="enum" name="enum MbimCtrlCaps" link="libmbim-glib-Enumerations-and-Flags.html#MbimCtrlCaps"/>
+    <keyword type="enum" name="enum MbimSubscriberReadyState" link="libmbim-glib-Enumerations-and-Flags.html#MbimSubscriberReadyState"/>
+    <keyword type="enum" name="enum MbimReadyInfoFlag" link="libmbim-glib-Enumerations-and-Flags.html#MbimReadyInfoFlag"/>
+    <keyword type="enum" name="enum MbimRadioSwitchState" link="libmbim-glib-Enumerations-and-Flags.html#MbimRadioSwitchState"/>
+    <keyword type="enum" name="enum MbimPinType" link="libmbim-glib-Enumerations-and-Flags.html#MbimPinType"/>
+    <keyword type="enum" name="enum MbimPinState" link="libmbim-glib-Enumerations-and-Flags.html#MbimPinState"/>
+    <keyword type="enum" name="enum MbimPinOperation" link="libmbim-glib-Enumerations-and-Flags.html#MbimPinOperation"/>
+    <keyword type="enum" name="enum MbimPinMode" link="libmbim-glib-Enumerations-and-Flags.html#MbimPinMode"/>
+    <keyword type="enum" name="enum MbimPinFormat" link="libmbim-glib-Enumerations-and-Flags.html#MbimPinFormat"/>
+    <keyword type="enum" name="enum MbimProviderState" link="libmbim-glib-Enumerations-and-Flags.html#MbimProviderState"/>
+    <keyword type="enum" name="enum MbimVisibleProvidersAction" link="libmbim-glib-Enumerations-and-Flags.html#MbimVisibleProvidersAction"/>
+    <keyword type="enum" name="enum MbimNwError" link="libmbim-glib-Enumerations-and-Flags.html#MbimNwError"/>
+    <keyword type="enum" name="enum MbimRegisterAction" link="libmbim-glib-Enumerations-and-Flags.html#MbimRegisterAction"/>
+    <keyword type="enum" name="enum MbimRegisterState" link="libmbim-glib-Enumerations-and-Flags.html#MbimRegisterState"/>
+    <keyword type="enum" name="enum MbimRegisterMode" link="libmbim-glib-Enumerations-and-Flags.html#MbimRegisterMode"/>
+    <keyword type="enum" name="enum MbimRegistrationFlag" link="libmbim-glib-Enumerations-and-Flags.html#MbimRegistrationFlag"/>
+    <keyword type="enum" name="enum MbimPacketServiceAction" link="libmbim-glib-Enumerations-and-Flags.html#MbimPacketServiceAction"/>
+    <keyword type="enum" name="enum MbimPacketServiceState" link="libmbim-glib-Enumerations-and-Flags.html#MbimPacketServiceState"/>
+    <keyword type="enum" name="enum MbimActivationCommand" link="libmbim-glib-Enumerations-and-Flags.html#MbimActivationCommand"/>
+    <keyword type="enum" name="enum MbimCompression" link="libmbim-glib-Enumerations-and-Flags.html#MbimCompression"/>
+    <keyword type="enum" name="enum MbimAuthProtocol" link="libmbim-glib-Enumerations-and-Flags.html#MbimAuthProtocol"/>
+    <keyword type="enum" name="enum MbimContextIpType" link="libmbim-glib-Enumerations-and-Flags.html#MbimContextIpType"/>
+    <keyword type="enum" name="enum MbimActivationState" link="libmbim-glib-Enumerations-and-Flags.html#MbimActivationState"/>
+    <keyword type="enum" name="enum MbimVoiceCallState" link="libmbim-glib-Enumerations-and-Flags.html#MbimVoiceCallState"/>
+    <keyword type="enum" name="enum MbimIPConfigurationAvailableFlag" link="libmbim-glib-Enumerations-and-Flags.html#MbimIPConfigurationAvailableFlag"/>
+    <keyword type="enum" name="enum MbimSmsStorageState" link="libmbim-glib-Enumerations-and-Flags.html#MbimSmsStorageState"/>
+    <keyword type="enum" name="enum MbimSmsFormat" link="libmbim-glib-Enumerations-and-Flags.html#MbimSmsFormat"/>
+    <keyword type="enum" name="enum MbimSmsFlag" link="libmbim-glib-Enumerations-and-Flags.html#MbimSmsFlag"/>
+    <keyword type="enum" name="enum MbimSmsCdmaLang" link="libmbim-glib-Enumerations-and-Flags.html#MbimSmsCdmaLang"/>
+    <keyword type="enum" name="enum MbimSmsCdmaEncoding" link="libmbim-glib-Enumerations-and-Flags.html#MbimSmsCdmaEncoding"/>
+    <keyword type="enum" name="enum MbimSmsStatus" link="libmbim-glib-Enumerations-and-Flags.html#MbimSmsStatus"/>
+    <keyword type="enum" name="enum MbimSmsStatusFlag" link="libmbim-glib-Enumerations-and-Flags.html#MbimSmsStatusFlag"/>
+    <keyword type="enum" name="enum MbimUssdAction" link="libmbim-glib-Enumerations-and-Flags.html#MbimUssdAction"/>
+    <keyword type="enum" name="enum MbimUssdResponse" link="libmbim-glib-Enumerations-and-Flags.html#MbimUssdResponse"/>
+    <keyword type="enum" name="enum MbimUssdSessionState" link="libmbim-glib-Enumerations-and-Flags.html#MbimUssdSessionState"/>
+    <keyword type="enum" name="enum MbimPhonebookFlag" link="libmbim-glib-Enumerations-and-Flags.html#MbimPhonebookFlag"/>
+    <keyword type="enum" name="enum MbimPhonebookState" link="libmbim-glib-Enumerations-and-Flags.html#MbimPhonebookState"/>
+    <keyword type="enum" name="enum MbimPhonebookWriteFlag" link="libmbim-glib-Enumerations-and-Flags.html#MbimPhonebookWriteFlag"/>
+    <keyword type="enum" name="enum MbimStkPacProfile" link="libmbim-glib-Enumerations-and-Flags.html#MbimStkPacProfile"/>
+    <keyword type="enum" name="enum MbimStkPacType" link="libmbim-glib-Enumerations-and-Flags.html#MbimStkPacType"/>
+    <keyword type="enum" name="enum MbimNetworkIdleHintState" link="libmbim-glib-Enumerations-and-Flags.html#MbimNetworkIdleHintState"/>
+    <keyword type="enum" name="enum MbimEmergencyModeState" link="libmbim-glib-Enumerations-and-Flags.html#MbimEmergencyModeState"/>
+    <keyword type="enum" name="enum MbimDssLinkState" link="libmbim-glib-Enumerations-and-Flags.html#MbimDssLinkState"/>
+    <keyword type="function" name="mbim_core_error_get_string ()" link="libmbim-glib-Errors.html#mbim-core-error-get-string"/>
+    <keyword type="function" name="mbim_protocol_error_get_string ()" link="libmbim-glib-Errors.html#mbim-protocol-error-get-string"/>
+    <keyword type="function" name="mbim_status_error_get_string ()" link="libmbim-glib-Errors.html#mbim-status-error-get-string"/>
+    <keyword type="enum" name="enum MbimCoreError" link="libmbim-glib-Errors.html#MbimCoreError"/>
+    <keyword type="enum" name="enum MbimProtocolError" link="libmbim-glib-Errors.html#MbimProtocolError"/>
+    <keyword type="enum" name="enum MbimStatusError" link="libmbim-glib-Errors.html#MbimStatusError"/>
+    <keyword type="function" name="mbim_utils_get_traces_enabled ()" link="libmbim-glib-Common-utilities.html#mbim-utils-get-traces-enabled"/>
+    <keyword type="function" name="mbim_utils_set_traces_enabled ()" link="libmbim-glib-Common-utilities.html#mbim-utils-set-traces-enabled"/>
+    <keyword type="function" name="mbim_pin_desc_free ()" link="libmbim-glib-Basic-Connect.html#mbim-pin-desc-free"/>
+    <keyword type="function" name="mbim_provider_free ()" link="libmbim-glib-Basic-Connect.html#mbim-provider-free"/>
+    <keyword type="function" name="mbim_provider_array_free ()" link="libmbim-glib-Basic-Connect.html#mbim-provider-array-free"/>
+    <keyword type="function" name="mbim_provisioned_context_element_array_free ()" link="libmbim-glib-Basic-Connect.html#mbim-provisioned-context-element-array-free"/>
+    <keyword type="function" name="mbim_ipv4_element_array_free ()" link="libmbim-glib-Basic-Connect.html#mbim-ipv4-element-array-free"/>
+    <keyword type="function" name="mbim_ipv6_element_array_free ()" link="libmbim-glib-Basic-Connect.html#mbim-ipv6-element-array-free"/>
+    <keyword type="function" name="mbim_device_service_element_array_free ()" link="libmbim-glib-Basic-Connect.html#mbim-device-service-element-array-free"/>
+    <keyword type="function" name="mbim_event_entry_array_free ()" link="libmbim-glib-Basic-Connect.html#mbim-event-entry-array-free"/>
+    <keyword type="function" name="mbim_packet_filter_array_free ()" link="libmbim-glib-Basic-Connect.html#mbim-packet-filter-array-free"/>
+    <keyword type="function" name="mbim_message_device_caps_query_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-device-caps-query-new"/>
+    <keyword type="function" name="mbim_message_device_caps_response_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-device-caps-response-parse"/>
+    <keyword type="function" name="mbim_message_subscriber_ready_status_query_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-subscriber-ready-status-query-new"/>
+    <keyword type="function" name="mbim_message_subscriber_ready_status_response_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-subscriber-ready-status-response-parse"/>
+    <keyword type="function" name="mbim_message_subscriber_ready_status_notification_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-subscriber-ready-status-notification-parse"/>
+    <keyword type="function" name="mbim_message_radio_state_query_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-radio-state-query-new"/>
+    <keyword type="function" name="mbim_message_radio_state_set_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-radio-state-set-new"/>
+    <keyword type="function" name="mbim_message_radio_state_response_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-radio-state-response-parse"/>
+    <keyword type="function" name="mbim_message_radio_state_notification_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-radio-state-notification-parse"/>
+    <keyword type="function" name="mbim_message_pin_query_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-pin-query-new"/>
+    <keyword type="function" name="mbim_message_pin_set_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-pin-set-new"/>
+    <keyword type="function" name="mbim_message_pin_response_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-pin-response-parse"/>
+    <keyword type="function" name="mbim_message_pin_list_query_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-pin-list-query-new"/>
+    <keyword type="function" name="mbim_message_pin_list_response_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-pin-list-response-parse"/>
+    <keyword type="function" name="mbim_message_home_provider_query_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-home-provider-query-new"/>
+    <keyword type="function" name="mbim_message_home_provider_set_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-home-provider-set-new"/>
+    <keyword type="function" name="mbim_message_home_provider_response_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-home-provider-response-parse"/>
+    <keyword type="function" name="mbim_message_preferred_providers_query_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-preferred-providers-query-new"/>
+    <keyword type="function" name="mbim_message_preferred_providers_set_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-preferred-providers-set-new"/>
+    <keyword type="function" name="mbim_message_preferred_providers_response_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-preferred-providers-response-parse"/>
+    <keyword type="function" name="mbim_message_preferred_providers_notification_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-preferred-providers-notification-parse"/>
+    <keyword type="function" name="mbim_message_visible_providers_query_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-visible-providers-query-new"/>
+    <keyword type="function" name="mbim_message_visible_providers_response_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-visible-providers-response-parse"/>
+    <keyword type="function" name="mbim_message_register_state_query_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-register-state-query-new"/>
+    <keyword type="function" name="mbim_message_register_state_set_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-register-state-set-new"/>
+    <keyword type="function" name="mbim_message_register_state_response_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-register-state-response-parse"/>
+    <keyword type="function" name="mbim_message_register_state_notification_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-register-state-notification-parse"/>
+    <keyword type="function" name="mbim_message_signal_state_query_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-signal-state-query-new"/>
+    <keyword type="function" name="mbim_message_signal_state_set_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-signal-state-set-new"/>
+    <keyword type="function" name="mbim_message_signal_state_response_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-signal-state-response-parse"/>
+    <keyword type="function" name="mbim_message_signal_state_notification_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-signal-state-notification-parse"/>
+    <keyword type="function" name="mbim_message_packet_service_query_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-packet-service-query-new"/>
+    <keyword type="function" name="mbim_message_packet_service_set_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-packet-service-set-new"/>
+    <keyword type="function" name="mbim_message_packet_service_response_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-packet-service-response-parse"/>
+    <keyword type="function" name="mbim_message_packet_service_notification_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-packet-service-notification-parse"/>
+    <keyword type="function" name="mbim_message_connect_query_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-connect-query-new"/>
+    <keyword type="function" name="mbim_message_connect_set_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-connect-set-new"/>
+    <keyword type="function" name="mbim_message_connect_response_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-connect-response-parse"/>
+    <keyword type="function" name="mbim_message_connect_notification_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-connect-notification-parse"/>
+    <keyword type="function" name="mbim_message_provisioned_contexts_query_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-provisioned-contexts-query-new"/>
+    <keyword type="function" name="mbim_message_provisioned_contexts_set_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-provisioned-contexts-set-new"/>
+    <keyword type="function" name="mbim_message_provisioned_contexts_response_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-provisioned-contexts-response-parse"/>
+    <keyword type="function" name="mbim_message_provisioned_contexts_notification_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-provisioned-contexts-notification-parse"/>
+    <keyword type="function" name="mbim_message_service_activation_set_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-service-activation-set-new"/>
+    <keyword type="function" name="mbim_message_service_activation_response_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-service-activation-response-parse"/>
+    <keyword type="function" name="mbim_message_ip_configuration_query_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-ip-configuration-query-new"/>
+    <keyword type="function" name="mbim_message_ip_configuration_response_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-ip-configuration-response-parse"/>
+    <keyword type="function" name="mbim_message_ip_configuration_notification_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-ip-configuration-notification-parse"/>
+    <keyword type="function" name="mbim_message_device_services_query_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-device-services-query-new"/>
+    <keyword type="function" name="mbim_message_device_services_response_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-device-services-response-parse"/>
+    <keyword type="function" name="mbim_message_device_service_subscribe_list_set_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-device-service-subscribe-list-set-new"/>
+    <keyword type="function" name="mbim_message_device_service_subscribe_list_response_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-device-service-subscribe-list-response-parse"/>
+    <keyword type="function" name="mbim_message_packet_statistics_query_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-packet-statistics-query-new"/>
+    <keyword type="function" name="mbim_message_packet_statistics_response_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-packet-statistics-response-parse"/>
+    <keyword type="function" name="mbim_message_network_idle_hint_query_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-network-idle-hint-query-new"/>
+    <keyword type="function" name="mbim_message_network_idle_hint_set_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-network-idle-hint-set-new"/>
+    <keyword type="function" name="mbim_message_network_idle_hint_response_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-network-idle-hint-response-parse"/>
+    <keyword type="function" name="mbim_message_emergency_mode_query_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-emergency-mode-query-new"/>
+    <keyword type="function" name="mbim_message_emergency_mode_set_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-emergency-mode-set-new"/>
+    <keyword type="function" name="mbim_message_emergency_mode_response_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-emergency-mode-response-parse"/>
+    <keyword type="function" name="mbim_message_emergency_mode_notification_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-emergency-mode-notification-parse"/>
+    <keyword type="function" name="mbim_message_ip_packet_filters_query_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-ip-packet-filters-query-new"/>
+    <keyword type="function" name="mbim_message_ip_packet_filters_set_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-ip-packet-filters-set-new"/>
+    <keyword type="function" name="mbim_message_ip_packet_filters_response_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-ip-packet-filters-response-parse"/>
+    <keyword type="function" name="mbim_message_multicarrier_providers_query_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-multicarrier-providers-query-new"/>
+    <keyword type="function" name="mbim_message_multicarrier_providers_set_new ()" link="libmbim-glib-Basic-Connect.html#mbim-message-multicarrier-providers-set-new"/>
+    <keyword type="function" name="mbim_message_multicarrier_providers_response_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-multicarrier-providers-response-parse"/>
+    <keyword type="function" name="mbim_message_multicarrier_providers_notification_parse ()" link="libmbim-glib-Basic-Connect.html#mbim-message-multicarrier-providers-notification-parse"/>
+    <keyword type="struct" name="MbimPinDesc" link="libmbim-glib-Basic-Connect.html#MbimPinDesc"/>
+    <keyword type="struct" name="MbimProvider" link="libmbim-glib-Basic-Connect.html#MbimProvider"/>
+    <keyword type="struct" name="MbimProvisionedContextElement" link="libmbim-glib-Basic-Connect.html#MbimProvisionedContextElement"/>
+    <keyword type="struct" name="MbimIPv4Element" link="libmbim-glib-Basic-Connect.html#MbimIPv4Element"/>
+    <keyword type="struct" name="MbimIPv6Element" link="libmbim-glib-Basic-Connect.html#MbimIPv6Element"/>
+    <keyword type="struct" name="MbimDeviceServiceElement" link="libmbim-glib-Basic-Connect.html#MbimDeviceServiceElement"/>
+    <keyword type="struct" name="MbimEventEntry" link="libmbim-glib-Basic-Connect.html#MbimEventEntry"/>
+    <keyword type="struct" name="MbimPacketFilter" link="libmbim-glib-Basic-Connect.html#MbimPacketFilter"/>
+    <keyword type="function" name="mbim_sms_pdu_read_record_array_free ()" link="libmbim-glib-SMS.html#mbim-sms-pdu-read-record-array-free"/>
+    <keyword type="function" name="mbim_sms_cdma_read_record_array_free ()" link="libmbim-glib-SMS.html#mbim-sms-cdma-read-record-array-free"/>
+    <keyword type="function" name="mbim_sms_pdu_send_record_free ()" link="libmbim-glib-SMS.html#mbim-sms-pdu-send-record-free"/>
+    <keyword type="function" name="mbim_sms_cdma_send_record_free ()" link="libmbim-glib-SMS.html#mbim-sms-cdma-send-record-free"/>
+    <keyword type="function" name="mbim_message_sms_configuration_query_new ()" link="libmbim-glib-SMS.html#mbim-message-sms-configuration-query-new"/>
+    <keyword type="function" name="mbim_message_sms_configuration_set_new ()" link="libmbim-glib-SMS.html#mbim-message-sms-configuration-set-new"/>
+    <keyword type="function" name="mbim_message_sms_configuration_response_parse ()" link="libmbim-glib-SMS.html#mbim-message-sms-configuration-response-parse"/>
+    <keyword type="function" name="mbim_message_sms_read_query_new ()" link="libmbim-glib-SMS.html#mbim-message-sms-read-query-new"/>
+    <keyword type="function" name="mbim_message_sms_read_response_parse ()" link="libmbim-glib-SMS.html#mbim-message-sms-read-response-parse"/>
+    <keyword type="function" name="mbim_message_sms_read_notification_parse ()" link="libmbim-glib-SMS.html#mbim-message-sms-read-notification-parse"/>
+    <keyword type="function" name="mbim_message_sms_send_set_new ()" link="libmbim-glib-SMS.html#mbim-message-sms-send-set-new"/>
+    <keyword type="function" name="mbim_message_sms_send_response_parse ()" link="libmbim-glib-SMS.html#mbim-message-sms-send-response-parse"/>
+    <keyword type="function" name="mbim_message_sms_delete_set_new ()" link="libmbim-glib-SMS.html#mbim-message-sms-delete-set-new"/>
+    <keyword type="function" name="mbim_message_sms_delete_response_parse ()" link="libmbim-glib-SMS.html#mbim-message-sms-delete-response-parse"/>
+    <keyword type="function" name="mbim_message_sms_message_store_status_query_new ()" link="libmbim-glib-SMS.html#mbim-message-sms-message-store-status-query-new"/>
+    <keyword type="function" name="mbim_message_sms_message_store_status_response_parse ()" link="libmbim-glib-SMS.html#mbim-message-sms-message-store-status-response-parse"/>
+    <keyword type="function" name="mbim_message_sms_message_store_status_notification_parse ()" link="libmbim-glib-SMS.html#mbim-message-sms-message-store-status-notification-parse"/>
+    <keyword type="struct" name="MbimSmsPduReadRecord" link="libmbim-glib-SMS.html#MbimSmsPduReadRecord"/>
+    <keyword type="struct" name="MbimSmsCdmaReadRecord" link="libmbim-glib-SMS.html#MbimSmsCdmaReadRecord"/>
+    <keyword type="struct" name="MbimSmsPduSendRecord" link="libmbim-glib-SMS.html#MbimSmsPduSendRecord"/>
+    <keyword type="struct" name="MbimSmsCdmaSendRecord" link="libmbim-glib-SMS.html#MbimSmsCdmaSendRecord"/>
+    <keyword type="function" name="mbim_message_ussd_set_new ()" link="libmbim-glib-USSD.html#mbim-message-ussd-set-new"/>
+    <keyword type="function" name="mbim_message_ussd_response_parse ()" link="libmbim-glib-USSD.html#mbim-message-ussd-response-parse"/>
+    <keyword type="function" name="mbim_message_ussd_notification_parse ()" link="libmbim-glib-USSD.html#mbim-message-ussd-notification-parse"/>
+    <keyword type="function" name="mbim_message_auth_aka_query_new ()" link="libmbim-glib-Auth.html#mbim-message-auth-aka-query-new"/>
+    <keyword type="function" name="mbim_message_auth_aka_response_parse ()" link="libmbim-glib-Auth.html#mbim-message-auth-aka-response-parse"/>
+    <keyword type="function" name="mbim_message_auth_akap_query_new ()" link="libmbim-glib-Auth.html#mbim-message-auth-akap-query-new"/>
+    <keyword type="function" name="mbim_message_auth_akap_response_parse ()" link="libmbim-glib-Auth.html#mbim-message-auth-akap-response-parse"/>
+    <keyword type="function" name="mbim_message_auth_sim_query_new ()" link="libmbim-glib-Auth.html#mbim-message-auth-sim-query-new"/>
+    <keyword type="function" name="mbim_message_auth_sim_response_parse ()" link="libmbim-glib-Auth.html#mbim-message-auth-sim-response-parse"/>
+    <keyword type="function" name="mbim_phonebook_entry_array_free ()" link="libmbim-glib-Phonebook.html#mbim-phonebook-entry-array-free"/>
+    <keyword type="function" name="mbim_message_phonebook_configuration_query_new ()" link="libmbim-glib-Phonebook.html#mbim-message-phonebook-configuration-query-new"/>
+    <keyword type="function" name="mbim_message_phonebook_configuration_response_parse ()" link="libmbim-glib-Phonebook.html#mbim-message-phonebook-configuration-response-parse"/>
+    <keyword type="function" name="mbim_message_phonebook_configuration_notification_parse ()" link="libmbim-glib-Phonebook.html#mbim-message-phonebook-configuration-notification-parse"/>
+    <keyword type="function" name="mbim_message_phonebook_read_query_new ()" link="libmbim-glib-Phonebook.html#mbim-message-phonebook-read-query-new"/>
+    <keyword type="function" name="mbim_message_phonebook_read_response_parse ()" link="libmbim-glib-Phonebook.html#mbim-message-phonebook-read-response-parse"/>
+    <keyword type="function" name="mbim_message_phonebook_delete_set_new ()" link="libmbim-glib-Phonebook.html#mbim-message-phonebook-delete-set-new"/>
+    <keyword type="function" name="mbim_message_phonebook_delete_response_parse ()" link="libmbim-glib-Phonebook.html#mbim-message-phonebook-delete-response-parse"/>
+    <keyword type="function" name="mbim_message_phonebook_write_set_new ()" link="libmbim-glib-Phonebook.html#mbim-message-phonebook-write-set-new"/>
+    <keyword type="function" name="mbim_message_phonebook_write_response_parse ()" link="libmbim-glib-Phonebook.html#mbim-message-phonebook-write-response-parse"/>
+    <keyword type="struct" name="MbimPhonebookEntry" link="libmbim-glib-Phonebook.html#MbimPhonebookEntry"/>
+    <keyword type="function" name="mbim_message_stk_pac_query_new ()" link="libmbim-glib-STK.html#mbim-message-stk-pac-query-new"/>
+    <keyword type="function" name="mbim_message_stk_pac_set_new ()" link="libmbim-glib-STK.html#mbim-message-stk-pac-set-new"/>
+    <keyword type="function" name="mbim_message_stk_pac_response_parse ()" link="libmbim-glib-STK.html#mbim-message-stk-pac-response-parse"/>
+    <keyword type="function" name="mbim_message_stk_pac_notification_parse ()" link="libmbim-glib-STK.html#mbim-message-stk-pac-notification-parse"/>
+    <keyword type="function" name="mbim_message_stk_terminal_response_set_new ()" link="libmbim-glib-STK.html#mbim-message-stk-terminal-response-set-new"/>
+    <keyword type="function" name="mbim_message_stk_terminal_response_response_parse ()" link="libmbim-glib-STK.html#mbim-message-stk-terminal-response-response-parse"/>
+    <keyword type="function" name="mbim_message_stk_envelope_query_new ()" link="libmbim-glib-STK.html#mbim-message-stk-envelope-query-new"/>
+    <keyword type="function" name="mbim_message_stk_envelope_set_new ()" link="libmbim-glib-STK.html#mbim-message-stk-envelope-set-new"/>
+    <keyword type="function" name="mbim_message_stk_envelope_response_parse ()" link="libmbim-glib-STK.html#mbim-message-stk-envelope-response-parse"/>
+    <keyword type="function" name="mbim_message_dss_connect_set_new ()" link="libmbim-glib-DSS.html#mbim-message-dss-connect-set-new"/>
+    <keyword type="function" name="mbim_message_dss_connect_response_parse ()" link="libmbim-glib-DSS.html#mbim-message-dss-connect-response-parse"/>
+    <keyword type="function" name="mbim_message_ms_firmware_id_get_query_new ()" link="libmbim-glib-MS-Firmware-ID.html#mbim-message-ms-firmware-id-get-query-new"/>
+    <keyword type="function" name="mbim_message_ms_firmware_id_get_response_parse ()" link="libmbim-glib-MS-Firmware-ID.html#mbim-message-ms-firmware-id-get-response-parse"/>
+    <keyword type="function" name="mbim_message_ms_host_shutdown_notify_set_new ()" link="libmbim-glib-MS-Host-Shutdown.html#mbim-message-ms-host-shutdown-notify-set-new"/>
+    <keyword type="function" name="mbim_message_device_service_subscriber_list_response_parse ()" link="libmbim-glib-Deprecated-API.html#mbim-message-device-service-subscriber-list-response-parse" deprecated="1.8.0: Use mbim_message_device_service_subscribe_list_response_parse() instead."/>
+    <keyword type="function" name="mbim_message_device_service_subscriber_list_set_new ()" link="libmbim-glib-Deprecated-API.html#mbim-message-device-service-subscriber-list-set-new" deprecated="1.8.0: Use mbim_message_device_service_subscribe_list_set_new() instead."/>
+    <keyword type="macro" name="MBIM_CID_BASIC_CONNECT_DEVICE_SERVICE_SUBSCRIBER_LIST" link="libmbim-glib-Deprecated-API.html#MBIM-CID-BASIC-CONNECT-DEVICE-SERVICE-SUBSCRIBER-LIST:CAPS" deprecated="1.8.0: Use MBIM_CID_BASIC_CONNECT_DEVICE_SERVICE_SUBSCRIBE_LIST instead."/>
+    <keyword type="macro" name="MBIM_REGISTRATION_FLAG_MANUAL_PACKET_SERVICE_AUTOMATIC_ATTACH" link="libmbim-glib-Deprecated-API.html#MBIM-REGISTRATION-FLAG-MANUAL-PACKET-SERVICE-AUTOMATIC-ATTACH:CAPS" deprecated="1.8.0: Use MBIM_REGISTRATION_FLAG_PACKET_SERVICE_AUTOMATIC_ATTACH instead."/>
+  </functions>
+</book>
