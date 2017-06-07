@@ -1,0 +1,28 @@
+From 434a4c23ce9bc5c0c8690a944f06be2d3d851cae Mon Sep 17 00:00:00 2001
+From: Alex Tu <alex.tu@canonical.com>
+Date: Wed, 28 Jun 2017 04:08:13 -0400
+Subject: [PATCH] bump .so version
+
+---
+ configure.ac | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 4b4c5cf..788af1a 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -16,9 +16,9 @@ dnl        If the interface has grown (that is, the new library is compatible
+ dnl            with old code), increment a.
+ dnl        If the interface has changed in an incompatible way (that is,
+ dnl            functions have changed or been removed), then zero a.
+-m4_define([mbim_glib_lt_current],  [5])
++m4_define([mbim_glib_lt_current],  [6])
+ m4_define([mbim_glib_lt_revision], [0])
+-m4_define([mbim_glib_lt_age],      [1])
++m4_define([mbim_glib_lt_age],      [2])
+ 
+ 
+ AC_INIT([libmbim], [mbim_version], [libmbim-devel@lists.freedesktop.org])
+-- 
+2.7.4
+
