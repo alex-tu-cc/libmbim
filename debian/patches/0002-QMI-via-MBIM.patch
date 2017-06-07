@@ -1,0 +1,441 @@
+From 7bf40d20b8afc071de26c77b9c0b668fcb799b90 Mon Sep 17 00:00:00 2001
+From: Collin McMillan <cmc@nd.edu>
+Date: Mon, 4 Apr 2016 11:33:46 +0200
+Subject: [PATCH 1/2] QMI via MBIM
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Bjørn Mork <bjorn@mork.no>
+---
+ build-aux/mbim-codegen/Message.py       |  8 ++++----
+ build-aux/mbim-codegen/Struct.py        |  8 ++++----
+ data/Makefile.am                        |  3 ++-
+ src/libmbim-glib/generated/Makefile.am  | 18 +++++++++++++++---
+ src/libmbim-glib/libmbim-glib.h         |  1 +
+ src/libmbim-glib/mbim-cid.c             | 25 +++++++++++++++++++++----
+ src/libmbim-glib/mbim-cid.h             | 12 ++++++++++++
+ src/libmbim-glib/mbim-message-private.h |  2 ++
+ src/libmbim-glib/mbim-message.c         | 25 ++++++++++++++++---------
+ src/libmbim-glib/mbim-uuid.c            | 18 ++++++++++++++++--
+ src/libmbim-glib/mbim-uuid.h            | 11 +++++++++++
+ 11 files changed, 104 insertions(+), 27 deletions(-)
+
+diff --git a/build-aux/mbim-codegen/Message.py b/build-aux/mbim-codegen/Message.py
+index aa4e7b7..e66335d 100644
+--- a/build-aux/mbim-codegen/Message.py
++++ b/build-aux/mbim-codegen/Message.py
+@@ -394,13 +394,13 @@ class Message:
+                 inner_template += ('    {\n')
+ 
+             if field['format'] == 'byte-array':
+-                inner_template += ('        _mbim_message_command_builder_append_byte_array (builder, FALSE, FALSE, ${field}, ${array_size});\n')
++                inner_template += ('        _mbim_message_command_builder_append_byte_array (builder, FALSE, FALSE, TRUE, ${field}, ${array_size});\n')
+             elif field['format'] == 'unsized-byte-array':
+-                inner_template += ('        _mbim_message_command_builder_append_byte_array (builder, FALSE, FALSE, ${field}, ${field}_size);\n')
++                inner_template += ('        _mbim_message_command_builder_append_byte_array (builder, FALSE, FALSE, FALSE, ${field}, ${field}_size);\n')
+             elif field['format'] == 'ref-byte-array':
+-                inner_template += ('        _mbim_message_command_builder_append_byte_array (builder, TRUE, TRUE, ${field}, ${field}_size);\n')
++                inner_template += ('        _mbim_message_command_builder_append_byte_array (builder, TRUE, TRUE, TRUE, ${field}, ${field}_size);\n')
+             elif field['format'] == 'ref-byte-array-no-offset':
+-                inner_template += ('        _mbim_message_command_builder_append_byte_array (builder, FALSE, TRUE, ${field}, ${field}_size);\n')
++                inner_template += ('        _mbim_message_command_builder_append_byte_array (builder, FALSE, TRUE, TRUE, ${field}, ${field}_size);\n')
+             elif field['format'] == 'uuid':
+                 inner_template += ('        _mbim_message_command_builder_append_uuid (builder, ${field});\n')
+             elif field['format'] == 'guint32':
+diff --git a/build-aux/mbim-codegen/Struct.py b/build-aux/mbim-codegen/Struct.py
+index 495e22f..8797f3a 100644
+--- a/build-aux/mbim-codegen/Struct.py
++++ b/build-aux/mbim-codegen/Struct.py
+@@ -498,14 +498,14 @@ class Struct:
+             if field['format'] == 'uuid':
+                 inner_template = ('    _mbim_struct_builder_append_uuid (builder, &(value->${field}));\n')
+             elif field['format'] == 'byte-array':
+-                inner_template = ('    _mbim_struct_builder_append_byte_array (builder, FALSE, FALSE, value->${field}, ${array_size});\n')
++                inner_template = ('    _mbim_struct_builder_append_byte_array (builder, FALSE, FALSE, TRUE, value->${field}, ${array_size});\n')
+             elif field['format'] == 'unsized-byte-array':
+-                inner_template = ('    _mbim_struct_builder_append_byte_array (builder, FALSE, FALSE, value->${field}, value->${field}_size);\n')
++                inner_template = ('    _mbim_struct_builder_append_byte_array (builder, FALSE, FALSE, FALSE, value->${field}, value->${field}_size);\n')
+             elif field['format'] == 'ref-byte-array':
+                 if 'array-size-field' in field:
+-                    inner_template = ('    _mbim_struct_builder_append_byte_array (builder, TRUE, FALSE, value->${field}, value->${array_size_field});\n')
++                    inner_template = ('    _mbim_struct_builder_append_byte_array (builder, TRUE, FALSE, TRUE, value->${field}, value->${array_size_field});\n')
+                 else:
+-                    inner_template = ('    _mbim_struct_builder_append_byte_array (builder, TRUE, TRUE, value->${field}, value->${field}_size);\n')
++                    inner_template = ('    _mbim_struct_builder_append_byte_array (builder, TRUE, TRUE, TRUE, value->${field}, value->${field}_size);\n')
+             elif field['format'] == 'guint32':
+                 inner_template = ('    _mbim_struct_builder_append_guint32 (builder, value->${field});\n')
+             elif field['format'] == 'guint32-array':
+diff --git a/data/Makefile.am b/data/Makefile.am
+index 111e028..8c8891a 100644
+--- a/data/Makefile.am
++++ b/data/Makefile.am
+@@ -10,4 +10,5 @@ EXTRA_DIST = \
+ 	mbim-service-dss.json \
+ 	mbim-service-ms-firmware-id.json \
+ 	mbim-service-ms-host-shutdown.json \
+-	mbim-service-proxy-control.json
++	mbim-service-proxy-control.json \
++	mbim-service-qmi.json
+diff --git a/src/libmbim-glib/generated/Makefile.am b/src/libmbim-glib/generated/Makefile.am
+index ce81a71..c8b153a 100644
+--- a/src/libmbim-glib/generated/Makefile.am
++++ b/src/libmbim-glib/generated/Makefile.am
+@@ -12,7 +12,8 @@ GENERATED_H = \
+ 	mbim-dss.h \
+ 	mbim-ms-firmware-id.h \
+ 	mbim-ms-host-shutdown.h \
+-	mbim-proxy-control.h
++	mbim-proxy-control.h \
++	mbim-qmi.h
+ 
+ GENERATED_C = \
+ 	mbim-error-types.c \
+@@ -27,7 +28,8 @@ GENERATED_C = \
+ 	mbim-dss.c \
+ 	mbim-ms-firmware-id.c \
+ 	mbim-ms-host-shutdown.c \
+-	mbim-proxy-control.c
++	mbim-proxy-control.c \
++	mbim-qmi.c
+ 
+ GENERATED_SECTIONS = \
+ 	mbim-basic-connect.sections \
+@@ -39,7 +41,8 @@ GENERATED_SECTIONS = \
+ 	mbim-dss.sections \
+ 	mbim-ms-firmware-id.sections \
+ 	mbim-ms-host-shutdown.sections \
+-	mbim-proxy-control.sections
++	mbim-proxy-control.sections \
++	mbim-qmi.sections
+ 
+ # Error types
+ mbim-error-types.h: $(top_srcdir)/src/libmbim-glib/mbim-errors.h $(top_srcdir)/build-aux/templates/mbim-error-types-template.h
+@@ -170,6 +173,15 @@ mbim-proxy-control.h mbim-proxy-control.c mbim-proxy-control.sections: $(top_src
+ 			--input $(top_srcdir)/data/mbim-service-proxy-control.json \
+ 			--output mbim-proxy-control
+ 
++# QMI-over-MBIM service
++mbim-qmi.h mbim-qmi.c mbim-qmi.sections: $(top_srcdir)/data/mbim-service-qmi.json $(top_srcdir)/build-aux/mbim-codegen/*.py $(top_srcdir)/build-aux/mbim-codegen/mbim-codegen
++	$(AM_V_GEN)  \
++		rm -f mbim-qmi.h && \
++		rm -f mbim-qmi.c && \
++		$(top_srcdir)/build-aux/mbim-codegen/mbim-codegen \
++			--input $(top_srcdir)/data/mbim-service-qmi.json \
++			--output mbim-qmi
++
+ BUILT_SOURCES = $(GENERATED_H) $(GENERATED_C)
+ 
+ nodist_libmbim_glib_generated_la_SOURCES = \
+diff --git a/src/libmbim-glib/libmbim-glib.h b/src/libmbim-glib/libmbim-glib.h
+index b41122b..88d0be8 100644
+--- a/src/libmbim-glib/libmbim-glib.h
++++ b/src/libmbim-glib/libmbim-glib.h
+@@ -48,6 +48,7 @@
+ #include "mbim-dss.h"
+ #include "mbim-ms-firmware-id.h"
+ #include "mbim-ms-host-shutdown.h"
++#include "mbim-qmi.h"
+ 
+ /* backwards compatibility */
+ #include "mbim-compat.h"
+diff --git a/src/libmbim-glib/mbim-cid.c b/src/libmbim-glib/mbim-cid.c
+index 50dc4f1..cbfd81e 100644
+--- a/src/libmbim-glib/mbim-cid.c
++++ b/src/libmbim-glib/mbim-cid.c
+@@ -38,6 +38,9 @@ typedef struct {
+     gboolean notify;
+ } CidConfig;
+ 
++/* Note: MBIM_SERVICE_LAST from mbim-uuid.c should probably be visible
++ * here somehow, since MBIM_SERVICE_QMI must be used in the error checks */
++
+ /* Note: index of the array is CID-1 */
+ #define MBIM_CID_BASIC_CONNECT_LAST MBIM_CID_BASIC_CONNECT_MULTICARRIER_PROVIDERS
+ static const CidConfig cid_basic_connect_config [MBIM_CID_BASIC_CONNECT_LAST] = {
+@@ -132,6 +135,12 @@ static const CidConfig cid_proxy_control_config [MBIM_CID_PROXY_CONTROL_LAST] =
+     { TRUE,  FALSE, FALSE }, /* MBIM_CID_PROXY_CONTROL_CONFIGURATION */
+ };
+ 
++/* Note: index of the array is CID-1 */
++#define MBIM_CID_QMI_LAST MBIM_CID_QMI_MSG
++static const CidConfig cid_qmi_config [MBIM_CID_QMI_LAST] = {
++    { TRUE,  FALSE, FALSE }, /* MBIM_CID_QMI_MSG */
++};
++
+ /**
+  * mbim_cid_can_set:
+  * @service: a #MbimService.
+@@ -149,7 +158,7 @@ mbim_cid_can_set (MbimService service,
+     g_return_val_if_fail (cid > 0, FALSE);
+     /* Known service required */
+     g_return_val_if_fail (service > MBIM_SERVICE_INVALID, FALSE);
+-    g_return_val_if_fail (service <= MBIM_SERVICE_PROXY_CONTROL, FALSE);
++    g_return_val_if_fail (service <= MBIM_SERVICE_QMI, FALSE);
+ 
+     switch (service) {
+     case MBIM_SERVICE_BASIC_CONNECT:
+@@ -172,6 +181,8 @@ mbim_cid_can_set (MbimService service,
+         return cid_ms_host_shutdown_config[cid - 1].set;
+     case MBIM_SERVICE_PROXY_CONTROL:
+         return cid_proxy_control_config[cid - 1].set;
++    case MBIM_SERVICE_QMI:
++        return cid_qmi_config[cid - 1].set;
+     default:
+         g_assert_not_reached ();
+         return FALSE;
+@@ -195,7 +206,7 @@ mbim_cid_can_query (MbimService service,
+     g_return_val_if_fail (cid > 0, FALSE);
+     /* Known service required */
+     g_return_val_if_fail (service > MBIM_SERVICE_INVALID, FALSE);
+-    g_return_val_if_fail (service <= MBIM_SERVICE_PROXY_CONTROL, FALSE);
++    g_return_val_if_fail (service <= MBIM_SERVICE_QMI, FALSE);
+ 
+     switch (service) {
+     case MBIM_SERVICE_BASIC_CONNECT:
+@@ -218,6 +229,8 @@ mbim_cid_can_query (MbimService service,
+         return cid_ms_host_shutdown_config[cid - 1].query;
+     case MBIM_SERVICE_PROXY_CONTROL:
+         return cid_proxy_control_config[cid - 1].query;
++    case MBIM_SERVICE_QMI:
++        return cid_qmi_config[cid - 1].query;
+     default:
+         g_assert_not_reached ();
+         return FALSE;
+@@ -241,7 +254,7 @@ mbim_cid_can_notify (MbimService service,
+     g_return_val_if_fail (cid > 0, FALSE);
+     /* Known service required */
+     g_return_val_if_fail (service > MBIM_SERVICE_INVALID, FALSE);
+-    g_return_val_if_fail (service <= MBIM_SERVICE_PROXY_CONTROL, FALSE);
++    g_return_val_if_fail (service <= MBIM_SERVICE_QMI, FALSE);
+ 
+     switch (service) {
+     case MBIM_SERVICE_BASIC_CONNECT:
+@@ -264,6 +277,8 @@ mbim_cid_can_notify (MbimService service,
+         return cid_ms_host_shutdown_config[cid - 1].notify;
+     case MBIM_SERVICE_PROXY_CONTROL:
+         return cid_proxy_control_config[cid - 1].notify;
++    case MBIM_SERVICE_QMI:
++        return cid_qmi_config[cid - 1].notify;
+     default:
+         g_assert_not_reached ();
+         return FALSE;
+@@ -288,7 +303,7 @@ mbim_cid_get_printable (MbimService service,
+     g_return_val_if_fail (cid > 0, NULL);
+     /* Known service required */
+     g_return_val_if_fail (service > MBIM_SERVICE_INVALID, NULL);
+-    g_return_val_if_fail (service <= MBIM_SERVICE_PROXY_CONTROL, NULL);
++    g_return_val_if_fail (service <= MBIM_SERVICE_QMI, NULL);
+ 
+     switch (service) {
+     case MBIM_SERVICE_BASIC_CONNECT:
+@@ -311,6 +326,8 @@ mbim_cid_get_printable (MbimService service,
+         return mbim_cid_ms_host_shutdown_get_string (cid);
+     case MBIM_SERVICE_PROXY_CONTROL:
+         return mbim_cid_proxy_control_get_string (cid);
++    case MBIM_SERVICE_QMI:
++        return mbim_cid_qmi_get_string (cid);
+     default:
+         g_assert_not_reached ();
+         return FALSE;
+diff --git a/src/libmbim-glib/mbim-cid.h b/src/libmbim-glib/mbim-cid.h
+index 3315340..da837a4 100644
+--- a/src/libmbim-glib/mbim-cid.h
++++ b/src/libmbim-glib/mbim-cid.h
+@@ -219,6 +219,18 @@ typedef enum {
+     MBIM_CID_PROXY_CONTROL_CONFIGURATION = 1
+ } MbimCidProxyControl;
+ 
++/**
++ * MbimCidQmi:
++ * @MBIM_CID_QMI_UNKNOWN: Unknown command.
++ * @MBIM_CID_QMI_MSG: Configuration.
++ *
++ * MBIM commands in the %MBIM_SERVICE_QMI service.
++ */
++typedef enum {
++    MBIM_CID_QMI_UNKNOWN = 0,
++    MBIM_CID_QMI_MSG     = 1
++} MbimCidQmi;
++
+ /* Command helpers */
+ 
+ gboolean     mbim_cid_can_set       (MbimService service,
+diff --git a/src/libmbim-glib/mbim-message-private.h b/src/libmbim-glib/mbim-message-private.h
+index b5606e0..0082026 100644
+--- a/src/libmbim-glib/mbim-message-private.h
++++ b/src/libmbim-glib/mbim-message-private.h
+@@ -177,6 +177,7 @@ GByteArray        *_mbim_struct_builder_complete             (MbimStructBuilder
+ void               _mbim_struct_builder_append_byte_array    (MbimStructBuilder *builder,
+                                                               gboolean           with_offset,
+                                                               gboolean           with_length,
++                                                              gboolean           permit_padding,
+                                                               const guint8      *buffer,
+                                                               guint32            buffer_len);
+ void               _mbim_struct_builder_append_uuid          (MbimStructBuilder *builder,
+@@ -225,6 +226,7 @@ MbimMessage               *_mbim_message_command_builder_complete             (M
+ void                       _mbim_message_command_builder_append_byte_array    (MbimMessageCommandBuilder *builder,
+                                                                                gboolean                   with_offset,
+                                                                                gboolean                   with_length,
++                                                                               gboolean                   permit_padding,
+                                                                                const guint8              *buffer,
+                                                                                guint32                    buffer_len);
+ void                       _mbim_message_command_builder_append_uuid          (MbimMessageCommandBuilder *builder,
+diff --git a/src/libmbim-glib/mbim-message.c b/src/libmbim-glib/mbim-message.c
+index b625ee5..ad67059 100644
+--- a/src/libmbim-glib/mbim-message.c
++++ b/src/libmbim-glib/mbim-message.c
+@@ -492,6 +492,7 @@ void
+ _mbim_struct_builder_append_byte_array (MbimStructBuilder *builder,
+                                         gboolean           with_offset,
+                                         gboolean           with_length,
++                                        gboolean           permit_padding,
+                                         const guint8      *buffer,
+                                         guint32            buffer_len)
+ {
+@@ -501,11 +502,13 @@ _mbim_struct_builder_append_byte_array (MbimStructBuilder *builder,
+      */
+     if (!with_offset && !with_length) {
+         g_byte_array_append (builder->fixed_buffer, buffer, buffer_len);
+-        while (buffer_len % 4 != 0) {
+-            const guint8 padding = 0;
++        if(permit_padding) {
++            while (buffer_len % 4 != 0) {
++                const guint8 padding = 0;
+ 
+-            g_byte_array_append (builder->fixed_buffer, &padding, 1);
+-            buffer_len++;
++                g_byte_array_append (builder->fixed_buffer, &padding, 1);
++                buffer_len++;
++            }
+         }
+         return;
+     }
+@@ -550,11 +553,14 @@ _mbim_struct_builder_append_byte_array (MbimStructBuilder *builder,
+     if (buffer_len) {
+         g_byte_array_append (builder->variable_buffer, (const guint8 *)buffer, (guint)buffer_len);
+ 
+-        while (buffer_len % 4 != 0) {
+-            const guint8 padding = 0;
++        /* Note: adding zero padding causes trouble for QMI service */
++        if(permit_padding) {
++            while (buffer_len % 4 != 0) {
++                const guint8 padding = 0;
+ 
+-            g_byte_array_append (builder->variable_buffer, &padding, 1);
+-            buffer_len++;
++                g_byte_array_append (builder->variable_buffer, &padding, 1);
++                buffer_len++;
++            }
+         }
+     }
+ }
+@@ -824,10 +830,11 @@ void
+ _mbim_message_command_builder_append_byte_array (MbimMessageCommandBuilder *builder,
+                                                  gboolean                   with_offset,
+                                                  gboolean                   with_length,
++                                                 gboolean                   permit_padding,
+                                                  const guint8              *buffer,
+                                                  guint32                    buffer_len)
+ {
+-    _mbim_struct_builder_append_byte_array (builder->contents_builder, with_offset, with_length, buffer, buffer_len);
++    _mbim_struct_builder_append_byte_array (builder->contents_builder, with_offset, with_length, permit_padding, buffer, buffer_len);
+ }
+ 
+ void
+diff --git a/src/libmbim-glib/mbim-uuid.c b/src/libmbim-glib/mbim-uuid.c
+index 6497645..95324c7 100644
+--- a/src/libmbim-glib/mbim-uuid.c
++++ b/src/libmbim-glib/mbim-uuid.c
+@@ -38,7 +38,7 @@
+  * This section defines the data type for unique identifiers.
+  */
+ 
+-#define MBIM_SERVICE_LAST MBIM_SERVICE_PROXY_CONTROL
++#define MBIM_SERVICE_LAST MBIM_SERVICE_QMI
+ 
+ /*****************************************************************************/
+ 
+@@ -229,6 +229,15 @@ static const MbimUuid uuid_proxy_control = {
+     .e = { 0xd7, 0x1d , 0xbe, 0xfb, 0xb3, 0x9b }
+ };
+ 
++/* Note: this UUID is likely to work only for Sierra modems */
++static const MbimUuid uuid_qmi = {
++    .a = { 0xd1, 0xa3, 0x0b, 0xc2 },
++    .b = { 0xf9, 0x7a },
++    .c = { 0x6e, 0x43 },
++    .d = { 0xbf, 0x65 },
++    .e = { 0xc7, 0xe2 , 0x4f, 0xb0, 0xf0, 0xd3 }
++};
++
+ static GList *mbim_custom_service_list = NULL;
+ 
+ typedef struct {
+@@ -367,7 +376,7 @@ mbim_uuid_from_service (MbimService service)
+     GList *l;
+ 
+     g_return_val_if_fail (service >= MBIM_SERVICE_INVALID &&
+-                          (service <= MBIM_SERVICE_PROXY_CONTROL ||
++                          (service <= MBIM_SERVICE_LAST ||
+                            mbim_service_id_is_custom (service)),
+                           &uuid_invalid);
+ 
+@@ -394,6 +403,8 @@ mbim_uuid_from_service (MbimService service)
+         return &uuid_ms_host_shutdown;
+     case MBIM_SERVICE_PROXY_CONTROL:
+         return &uuid_proxy_control;
++    case MBIM_SERVICE_QMI:
++        return &uuid_qmi;
+     default:
+         for (l = mbim_custom_service_list; l != NULL; l = l->next) {
+             if (service == ((MbimCustomService *)l->data)->service_id)
+@@ -446,6 +457,9 @@ mbim_uuid_to_service (const MbimUuid *uuid)
+     if (mbim_uuid_cmp (uuid, &uuid_proxy_control))
+         return MBIM_SERVICE_PROXY_CONTROL;
+ 
++    if (mbim_uuid_cmp (uuid, &uuid_qmi))
++        return MBIM_SERVICE_QMI;
++
+     for (l = mbim_custom_service_list; l != NULL; l = l->next) {
+         if (mbim_uuid_cmp (&((MbimCustomService *)l->data)->uuid, uuid))
+             return ((MbimCustomService *)l->data)->service_id;
+diff --git a/src/libmbim-glib/mbim-uuid.h b/src/libmbim-glib/mbim-uuid.h
+index 91def98..d42a256 100644
+--- a/src/libmbim-glib/mbim-uuid.h
++++ b/src/libmbim-glib/mbim-uuid.h
+@@ -71,6 +71,7 @@ gboolean  mbim_uuid_from_printable (const gchar *str,
+  * @MBIM_SERVICE_MS_FIRMWARE_ID: Microsoft Firmware ID service.
+  * @MBIM_SERVICE_MS_HOST_SHUTDOWN: Microsoft Host Shutdown service.
+  * @MBIM_SERVICE_PROXY_CONTROL: Proxy Control service.
++ * @MBIM_SERVICE_QMI: QMI-over-MBIM service.
+  *
+  * Enumeration of the generic MBIM services.
+  */
+@@ -86,6 +87,7 @@ typedef enum {
+     MBIM_SERVICE_MS_FIRMWARE_ID   = 8,
+     MBIM_SERVICE_MS_HOST_SHUTDOWN = 9,
+     MBIM_SERVICE_PROXY_CONTROL    = 10,
++    MBIM_SERVICE_QMI              = 11
+     /* Note: update MBIM_SERVICE_LAST when a new value is added */
+ } MbimService;
+ 
+@@ -188,6 +190,15 @@ typedef enum {
+  */
+ #define MBIM_UUID_PROXY_CONTROL mbim_uuid_from_service (MBIM_SERVICE_PROXY_CONTROL)
+ 
++/**
++ * MBIM_UUID_QMI:
++ *
++ * Get the UUID of the %MBIM_SERVICE_QMI service.
++ *
++ * Returns: (transfer none): a #MbimUuid.
++ */
++#define MBIM_UUID_QMI mbim_uuid_from_service (MBIM_SERVICE_QMI)
++
+ const gchar *mbim_service_lookup_name (guint service);
+ 
+ guint mbim_register_custom_service (const MbimUuid *uuid,
+-- 
+2.11.0
+
