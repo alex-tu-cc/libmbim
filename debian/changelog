@@ -1,3 +1,9 @@
+libmbim (1.12.2-2ubuntu1oem2) xenial; urgency=medium
+
+  * refer to the rule of libtool to correct the .so version.
+
+ -- Alex Tu <alex.tu@canonical.com>  Mon, 03 Jul 2017 11:35:35 +0800
+
 libmbim (1.12.2-2ubuntu1oem1) xenial; urgency=medium
 
   * backport qmi over mbim feature, also need libqmi and modemmanager be backported.(LP1693756)
